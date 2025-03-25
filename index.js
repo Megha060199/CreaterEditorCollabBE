@@ -19,19 +19,19 @@ import { initializeSocket } from './sockets/socket.js';
 const app = express();
 const PORT = process.env.PORT 
 
-// Middleware
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use(morgan('dev'));
 
-// Routes
+
 app.get('/', (req, res) => res.send('✅ Server running'));
 app.use('/editorListings',editorsRoute)
 app.use('/projects',projectsRoute)
 app.use('/chat', chatRoutes);
 app.use('/video', videoRoutes);
 
-// Global error handler
+
 app.use((err, req, res, next) => {
   console.error(err);
   res.status(500).json({ error: 'Something went wrong' });

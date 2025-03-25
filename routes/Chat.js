@@ -8,5 +8,6 @@ router.get('/messages/:conversationId', getMessages);
 router.post('/conversations', createConversation);
 
 router.post('/messages', createMessage);
-router.get('/conversation/:user1/:user2', getOrCreateConversation);
+router.post('/conversation', getOrCreateConversation);
+// router.get('/conversation/:user1/:user2', getOrCreateConversation);
 export default router;

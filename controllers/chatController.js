@@ -25,7 +25,8 @@ export const getMessages = async (req, res) => {
 };
 
 export const createConversation = async (req, res) => {
-  const { participants } = req.body; // expecting an array of user IDs
+  const { participants } = req.body; 
+
   try {
     const conversation = await chatService.createConversation(participants);
     res.status(201).json(conversation);
@@ -46,14 +47,26 @@ export const createMessage = async (req, res) => {
   }
 };
 
-export const getOrCreateConversation = async (req, res) => {
-    const { user1, user2 } = req.params;
-    try {
-      const conversation = await chatService.getOrCreateConversation(user1, user2);
+// export const getOrCreateConversation = async (req, res) => {
+//     const { user1, user2 } = req.params;
+//     try {
+//       const conversation = await chatService.getOrCreateConversation(user1, user2);
       
-      res.json(conversation);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Error fetching conversation' });
-    }
-  };
+//       res.json(conversation);
+//     } catch (error) {
+//       console.error(error);
+//       res.status(500).json({ error: 'Error fetching conversation' });
+//     }
+//   };
+
+export const getOrCreateConversation = async (req, res) => {
+  
+  try {
+    const conversation = await chatService.getOrCreateConversation(req.body.participants);
+    res.json(conversation);
+  } catch (error) {
+    console.error(error);
+    res.status(400).json({ error: error.message });
+  }
+};
+

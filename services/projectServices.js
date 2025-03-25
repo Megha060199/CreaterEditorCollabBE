@@ -11,10 +11,18 @@ export async function fetchProjects(userId, limit = 20, skip = 0) {
     headers: { 'X-API-Key': process.env.API_KEY }
   });
 
-  const rows = data.split('\n').map(line => line.split(','));
+  const raw_str = data.split('\n').map(line => line.split(','));
+  const [header, ...rows] = raw_str;
+  
+  console.log(header)
+  const total = rows.length;
+  const paginated = rows.slice(start, start + count);
+  const pages = Math.ceil(total / count);
 
-  const total_count = rows.length
+  // const rows = data.split('\n').map(line => line.split(','));
+  console.log(paginated,'checkk')
+  // const total_count = rows.length
   const result = rows.slice(start,start+count)
-  const pages =  Math.ceil(total_count/20)
-  return { count: result.length, start: start ,rows: result, pages:pages};
+
+  return { header:header,count: result.length, start: start ,rows: paginated, pages:pages};
 }
